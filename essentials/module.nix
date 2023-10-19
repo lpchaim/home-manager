@@ -6,7 +6,7 @@
   home.packages = with pkgs; [
     btop
     cheat
-    curl 
+    curl
     du-dust
     duf
     fd
