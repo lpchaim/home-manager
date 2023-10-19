@@ -1,1 +1,4 @@
 .direnv
+home.nix
+flake.lock
+flake.nix
