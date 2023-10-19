@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/lpchaim/home-manager/compare/v1.0.0...v1.1.0) (2023-10-19)
+
+
+### Features
+
+* Add tmux ([5442697](https://github.com/lpchaim/home-manager/commit/54426979be35abb45b3f2a3ee0e51e9c707ecd12))
+
 ## 1.0.0 (2023-10-15)
 
 
