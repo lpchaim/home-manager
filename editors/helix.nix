@@ -30,6 +30,7 @@
         right = [ "diagnostics" "selections" "position" "total-line-numbers" "file-encoding" ];
       };
       keys.normal = {
+        "A-f" = "file_picker_in_current_buffer_directory";
         "A-ç" = "switch_to_uppercase";
         "ç" = "switch_to_lowercase";
       };
