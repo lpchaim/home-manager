@@ -7,6 +7,7 @@
     ./nushell/module.nix
     ./starship/module.nix
     ./tealdeer/module.nix
+    ./tmux/module.nix
     ./zsh/module.nix
   ];
 }
