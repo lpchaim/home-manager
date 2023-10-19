@@ -10,15 +10,6 @@
         color-modes = true;
         line-number = "relative";
       };
-      editor.auto-pairs = {
-        "(" = ")";
-        "{" = "}";
-        "[" = "]";
-        "\"" = "\"";
-        "`" = "`";
-        "<" = ">";
-        ">" = "<";
-      };
       editor.cursor-shape = {
         insert = "bar";
         normal = "block";
