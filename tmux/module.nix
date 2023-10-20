@@ -11,6 +11,9 @@
       clock24 = true;
       extraConfig = ''
         source ${pkgs.powerline}/share/tmux/powerline.conf
+
+        set -g default-terminal 'xterm-256color'
+        set -ga terminal-overrides ',xterm-256color:Tc'
       '';
       keyMode = "vi";
       mouse = true;
