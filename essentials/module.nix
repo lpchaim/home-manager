@@ -25,6 +25,8 @@
     })
     rsync
     wget
+    wl-clipboard
+    xsel
   ];
 
   programs = {
