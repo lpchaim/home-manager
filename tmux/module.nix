@@ -3,7 +3,9 @@
 with builtins;
 with lib;
 {
-  home.packages = [ pkgs.powerline ];
+  imports = [
+    ./tmux-powerline/default.nix
+  ];
 
   programs = {
     fzf.enable = true;
@@ -13,10 +15,8 @@ with lib;
       baseIndex = 1;
       clock24 = true;
       extraConfig =  ''
-        source ${pkgs.powerline}/share/tmux/powerline.conf
-
-        set -g default-terminal 'xterm-256color'
-        set -ga terminal-overrides ',xterm-256color:Tc'
+        set -g default-terminal 'screen-256color'
+        set -ga terminal-overrides ',screen-256color:Tc'
 
         bind-key space next-window
         bind-key bspace previous-window
@@ -54,6 +54,17 @@ with lib;
             repo = "tmux-menus";
             rev = "764ac9cd6bbad199e042419b8074eda18e9d8b2d";
             sha256 = "sha256-tPUUaMASG/DtqxyN2VwCKPivYZkwVKjIScI99k6CJv8=";
+          };
+        })
+        (mkTmuxPlugin {
+          pluginName = "tmux-powerline";
+          version = "v3.0.0";
+          rtpFilePath = "main.tmux";
+          src = pkgs.fetchFromGitHub {
+            owner = "erikw";
+            repo = "tmux-powerline";
+            rev = "2480e5531e0027e49a90eaf540f973e624443937";
+            sha256 = "sha256-25uG7OI8OHkdZ3GrTxG1ETNeDtW1K+sHu2DfJtVHVbk=";
           };
         })
         tmux-thumbs
