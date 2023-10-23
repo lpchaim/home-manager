@@ -3,10 +3,6 @@
   fonts.fontconfig.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  home.sessionVariables = {
-    TERM = "screen-256color";
-  };
-
   home.packages = with pkgs; [
     btop
     cheat

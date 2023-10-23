@@ -2,10 +2,15 @@
 
 with builtins;
 with lib;
+let
+  term = "screen-256color";
+in
 {
   imports = [
     ./tmux-powerline/default.nix
   ];
+
+  home.sessionVariables.TERM = term;
 
   programs = {
     fzf.enable = true;
@@ -15,8 +20,8 @@ with lib;
       baseIndex = 1;
       clock24 = true;
       extraConfig =  ''
-        set -g default-terminal 'screen-256color'
-        set -ga terminal-overrides ',screen-256color:Tc'
+        set -g default-terminal '${term}'
+        set -ga terminal-overrides ',${term}:Tc'
 
         bind-key space next-window
         bind-key bspace previous-window
