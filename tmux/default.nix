@@ -37,7 +37,7 @@ in
       keyMode = "vi";
       mouse = true;
       newSession = true;
-      shortcut = "a";
+      shortcut = "Space";
       tmuxinator.enable = true;
       plugins = with pkgs.tmuxPlugins; [
         better-mouse-mode
