@@ -23,12 +23,13 @@ in
         set -g default-terminal '${term}'
         set -ga terminal-overrides ',${term}:Tc'
 
-        bind-key space next-window
-        bind-key bspace previous-window
-        bind-key enter next-layout
+        bind-key M-k next-window
+        bind-key M-j previous-window
+        bind-key M-l next-layout
 
         bind-key v split-window -h
         bind-key s split-window -v
+
         bind-key h select-pane -L
         bind-key j select-pane -D
         bind-key k select-pane -U
@@ -40,8 +41,8 @@ in
       shortcut = "Space";
       tmuxinator.enable = true;
       plugins = with pkgs.tmuxPlugins; [
-        better-mouse-mode
         sensible
+        better-mouse-mode
         tmux-fzf
         (mkTmuxPlugin {
           pluginName = "tmux-menus";
@@ -65,7 +66,12 @@ in
             sha256 = "sha256-25uG7OI8OHkdZ3GrTxG1ETNeDtW1K+sHu2DfJtVHVbk=";
           };
         })
-        tmux-thumbs
+        {
+          plugin = tmux-thumbs;
+          extraConfig = ''
+            bind-key Space thumbs-pick
+          '';
+        }
         {
           plugin = vim-tmux-navigator;
           extraConfig = ''
