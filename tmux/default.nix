@@ -23,17 +23,21 @@ in
         set -g default-terminal '${termBasic}'
         set -ga terminal-overrides ',${termFull}:Tc'
 
-        bind-key M-k next-window
-        bind-key M-j previous-window
-        bind-key M-l next-layout
+        bind-key -n -r C-h select-pane -L
+        bind-key -n -r C-j select-pane -D
+        bind-key -n -r C-k select-pane -U
+        bind-key -n -r C-l select-pane -R
+
+        bind-key -r h resize-pane -L
+        bind-key -r j resize-pane -D
+        bind-key -r k resize-pane -U
+        bind-key -r l resize-pane -R
+
+        bind-key -n M-k next-window
+        bind-key -n M-j previous-window
 
         bind-key v split-window -h
         bind-key s split-window -v
-
-        bind-key h select-pane -L
-        bind-key j select-pane -D
-        bind-key k select-pane -U
-        bind-key l select-pane -R
       '';
       keyMode = "vi";
       mouse = true;
@@ -103,6 +107,7 @@ in
             set -g @resurrect-strategy-vim 'session'
             set -g @resurrect-strategy-nvim 'session'
             set -g @resurrect-capture-pane-contents 'on'
+            set -g @resurrect-processes 'hx nano'
           '';
         }
         {
