@@ -41,13 +41,6 @@ in
       tmuxinator.enable = true;
       plugins = with pkgs.tmuxPlugins; [
         better-mouse-mode
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-          '';
-        }
-        resurrect
         sensible
         tmux-fzf
         (mkTmuxPlugin {
@@ -98,6 +91,22 @@ in
           '';
         }
         yank
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-strategy-vim 'session'
+            set -g @resurrect-strategy-nvim 'session'
+            set -g @resurrect-capture-pane-contents 'on'
+          '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-boot 'on'
+            set -g @continuum-save-interval '10'
+          '';
+        }
       ];
     };
   };
