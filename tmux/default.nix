@@ -43,7 +43,6 @@ in
       mouse = true;
       newSession = true;
       shortcut = "Space";
-      tmuxinator.enable = true;
       plugins = with pkgs.tmuxPlugins; [
         sensible
         better-mouse-mode
