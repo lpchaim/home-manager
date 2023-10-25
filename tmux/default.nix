@@ -2,6 +2,7 @@
 with builtins;
 with lib;
 let
+  defaultClipboard = "clipboard"; # clipboard, primary, secondary
   termBasic = "screen-256color";
   termFull = "xterm-256color";
 in
@@ -11,6 +12,10 @@ in
   ];
 
   home.sessionVariables.TERM = termFull;
+
+  home.packages = with pkgs; [
+    xsel
+  ];
 
   programs = {
     fzf.enable = true;
@@ -22,6 +27,7 @@ in
       extraConfig =  ''
         set -g default-terminal '${termBasic}'
         set -ga terminal-overrides ',${termFull}:Tc'
+        set -g set-clipboard on
 
         bind-key -n -r C-h select-pane -L
         bind-key -n -r C-j select-pane -D
@@ -70,12 +76,6 @@ in
           };
         })
         {
-          plugin = tmux-thumbs;
-          extraConfig = ''
-            bind-key Space thumbs-pick
-          '';
-        }
-        {
           plugin = vim-tmux-navigator;
           extraConfig = ''
             # Smart pane switching with awareness of Vim splits.
@@ -99,7 +99,26 @@ in
             bind-key -T copy-mode-vi 'C-\' select-pane -l
           '';
         }
-        yank
+        {
+          plugin = yank;
+          extraConfig = ''
+            set -g @yank_action 'copy-pipe' # or 'copy-pipe-and-cancel' for the default
+            set -g @yank_selection '${defaultClipboard}'
+            set -g @yank_selection_mouse '${defaultClipboard}'
+          '';
+        }
+        {
+          plugin = tmux-thumbs;
+          extraConfig = let
+            pasteCommand = "echo {} | xsel --${defaultClipboard}"; # TODO OS-specific variants, check available tools
+          in ''
+            bind-key Space thumbs-pick
+
+            set -g @thumbs-command 'tmux set-buffer -- {} && ${pasteCommand} && tmux display-message \"Copied {}\"'
+            set -g @thumbs-upcase-command 'tmux set-buffer -- {} && ${pasteCommand} && tmux paste-buffer && tmux display-message \"Copied {}\"'
+            set -g @thumbs-osc52 1
+          '';
+        }
         {
           plugin = resurrect;
           extraConfig = ''
