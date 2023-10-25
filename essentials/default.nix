@@ -7,6 +7,8 @@
     btop
     cheat
     curl
+    delta
+    difftastic
     du-dust
     duf
     fd
