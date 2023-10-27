@@ -25,10 +25,15 @@ in
       baseIndex = 1;
       clock24 = true;
       extraConfig =  ''
+        # General
         set -g default-terminal '${termBasic}'
         set -ga terminal-overrides ',${termFull}:Tc'
         set -g set-clipboard on
 
+        # Visuals
+        set-option -g status-position top
+
+        # Keybinds
         bind-key -n -r C-h select-pane -L
         bind-key -n -r C-j select-pane -D
         bind-key -n -r C-k select-pane -U
@@ -44,6 +49,9 @@ in
 
         bind-key v split-window -h
         bind-key s split-window -v
+
+        # Plugins
+        bind-key Space thumbs-pick
       '';
       keyMode = "vi";
       mouse = true;
