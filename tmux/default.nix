@@ -34,10 +34,10 @@ in
         set-option -g status-position top
 
         # Keybinds
-        bind-key -n -r C-h select-pane -L
-        bind-key -n -r C-j select-pane -D
-        bind-key -n -r C-k select-pane -U
-        bind-key -n -r C-l select-pane -R
+        bind-key -n -r C-h select-pane -LZ
+        bind-key -n -r C-j select-pane -DZ
+        bind-key -n -r C-k select-pane -UZ
+        bind-key -n -r C-l select-pane -RZ
 
         bind-key -r h resize-pane -L
         bind-key -r j resize-pane -D
