@@ -110,7 +110,7 @@ in
         {
           plugin = yank;
           extraConfig = ''
-            set -g @yank_action 'copy-pipe' # or 'copy-pipe-and-cancel' for the default
+            set -g @yank_action 'copy-pipe-and-cancel' # or 'copy-pipe'
             set -g @yank_selection '${defaultClipboard}'
             set -g @yank_selection_mouse '${defaultClipboard}'
           '';
@@ -118,13 +118,11 @@ in
         {
           plugin = tmux-thumbs;
           extraConfig = let
-            pasteCommand = "echo {} | xsel --${defaultClipboard}"; # TODO OS-specific variants, check available tools
+            pasteCommand = "(echo {} | xsel --${defaultClipboard})"; # TODO OS-specific variants, check available tools
           in ''
-            bind-key Space thumbs-pick
-
-            set -g @thumbs-command 'tmux set-buffer -- {} && ${pasteCommand} && tmux display-message \"Copied {}\"'
-            set -g @thumbs-upcase-command 'tmux set-buffer -- {} && ${pasteCommand} && tmux paste-buffer && tmux display-message \"Copied {}\"'
-            set -g @thumbs-osc52 1
+            set -g @thumbs-command '${pasteCommand} && tmux set-buffer -- {} && tmux display-message \"Copied {}\"'
+            set -g @thumbs-upcase-command '${pasteCommand} && tmux set-buffer -- {} && tmux paste-buffer && tmux display-message \"Copied {}\"'
+            # set -g @thumbs-osc52 1
           '';
         }
         {
