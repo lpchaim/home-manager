@@ -127,11 +127,18 @@ in
         }
         {
           plugin = resurrect;
-          extraConfig = ''
+          extraConfig = let
+            simpleRestore = [ "btop" "htop" ];
+            complexRestore = [ "hx" "nano" "nix-shell" "vim" ];
+            resurrectProcesses = lib.concatStringsSep " " (
+              simpleRestore
+              ++ (map (x: "\"~${x}->${x} *\"") complexRestore)
+            );
+          in ''
             set -g @resurrect-strategy-vim 'session'
             set -g @resurrect-strategy-nvim 'session'
             set -g @resurrect-capture-pane-contents 'on'
-            set -g @resurrect-processes 'hx nano'
+            set -g @resurrect-processes '${resurrectProcesses}'
           '';
         }
         {
