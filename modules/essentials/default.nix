@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "essentials" ];
+  namespace = (import ../namespace.nix) ++ [ "essentials" ];
 in
 {
   options = lib.setAttrByPath namespace {

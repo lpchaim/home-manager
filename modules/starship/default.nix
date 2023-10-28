@@ -2,8 +2,7 @@ args@{ config, lib, pkgs, ... }:
 
 with lib;
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "starship" ];
+  namespace = (import ../namespace.nix) ++ [ "starship" ];
   settings = import ./settings.nix;
   util = import ./util.nix args;
 in

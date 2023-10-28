@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "tealdeer" ];
+  namespace = (import ../namespace.nix) ++ [ "tealdeer" ];
 in
 {
   options = lib.setAttrByPath namespace {

@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "editors" "helix" ];
+  namespace = (import ../namespace.nix) ++ [ "editors" "helix" ];
 in
 {
   options = lib.setAttrByPath namespace {

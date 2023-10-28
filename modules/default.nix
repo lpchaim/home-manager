@@ -1,16 +1,16 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ./common.nix;
+  namespace = import ./namespace.nix;
 in
 {
-  options = lib.setAttrByPath common.namespace {
+  options = lib.setAttrByPath namespace {
     enable = lib.mkEnableOption "custom modules";
   };
 
   config =
     let
-      cfg = lib.getAttrFromPath common.namespace config;
+      cfg = lib.getAttrFromPath namespace config;
     in
     lib.mkIf cfg.enable {
       modules.custom = {

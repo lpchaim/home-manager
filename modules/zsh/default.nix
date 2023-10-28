@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "zsh" ];
+  namespace = (import ../namespace.nix) ++ [ "zsh" ];
 in
 {
   options = lib.setAttrByPath namespace {

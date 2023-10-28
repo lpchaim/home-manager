@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "git" ];
+  namespace = (import ../namespace.nix) ++ [ "git" ];
 in
 {
   options = lib.setAttrByPath namespace {

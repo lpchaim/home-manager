@@ -1,12 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "editors" ];
+  namespace = (import ../namespace.nix) ++ [ "editors" ];
 in
 {
   options = lib.setAttrByPath namespace {
-    enable = lib.mkEnableOption "custom modules";
+    enable = lib.mkEnableOption "editors";
     kakoune.enable = lib.mkEnableOption "kakoune";
     vim.enable = lib.mkEnableOption "vim";
   };
@@ -21,7 +20,7 @@ in
         vim.enable = cfg.vim.enable;
       };
     };
-  
+
   imports = [
     ./helix.nix
     ./neovim.nix

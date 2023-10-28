@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  common = import ../common.nix;
-  namespace = common.namespace ++ [ "nushell" ];
+  namespace = (import ../namespace.nix) ++ [ "nushell" ];
 in
 {
   options = lib.setAttrByPath namespace {
