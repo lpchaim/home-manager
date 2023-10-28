@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-with pkgs.lib;
+{ pkgs, lib, ... }:
+with lib;
 let 
   makePreset = name: pkgs.runCommand
     "starship-preset-${name}"
