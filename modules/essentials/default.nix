@@ -26,6 +26,7 @@ in
         duf
         fd
         htop
+        ncdu
         (nerdfonts.override {
           fonts = [
             "FiraCode"
