@@ -111,7 +111,7 @@
 	
 	## Maildir
 	# Path to the maildir to check.
-	export TMUX_POWERLINE_SEG_MAILCOUNT_MAILDIR_INBOX="/home/cheina/.mail/inbox/new"
+	export TMUX_POWERLINE_SEG_MAILCOUNT_MAILDIR_INBOX="$HOME/.mail/inbox/new"
 	
 	## mbox
 	# Path to the mbox to check.
@@ -119,7 +119,7 @@
 	
 	## mailcheck
 	# Optional path to mailcheckrc
-	export TMUX_POWERLINE_SEG_MAILCOUNT_MAILCHECKRC="/home/cheina/.mailcheckrc"
+	export TMUX_POWERLINE_SEG_MAILCOUNT_MAILCHECKRC="$HOME/.mailcheckrc"
 # }
 
 # now_playing.sh {

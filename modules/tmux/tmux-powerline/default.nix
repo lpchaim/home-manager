@@ -18,5 +18,12 @@ with lib;
   ];
 
   home.file."${config.xdg.configHome}/tmux-powerline/config.sh".source = ./config.sh;
-  home.file."${config.xdg.configHome}/tmux-powerline/themes/custom.sh".source = ./theme.sh;
+  home.file."${config.xdg.configHome}/tmux-powerline/themes" = {
+    source = ./themes;
+    recursive = true;
+  };
+  home.file."${config.xdg.configHome}/tmux-powerline/segments" = {
+    source = ./segments;
+    recursive = true;
+  };
 }
