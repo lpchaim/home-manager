@@ -38,6 +38,7 @@ in
           set -g default-terminal '${termBasic}'
           set -ga terminal-overrides ',${termFull}:Tc'
           set -g set-clipboard on
+          set -g renumber-windows on
 
           # Visuals
           set-option -g status-position top
