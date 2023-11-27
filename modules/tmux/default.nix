@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+args@{ config, pkgs, lib, ... }:
 
 with builtins;
 with lib;
@@ -11,7 +11,12 @@ let
 in
 {
   options = lib.setAttrByPath namespace {
-    enable = lib.mkEnableOption "nushell";
+    enable = lib.mkEnableOption "tmux";
+    theme = lib.mkOption {
+      description = "Which theme to use.";
+      type = types.enum [ "catppuccin" "tmux-powerline" ];
+      default = "catppuccin";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -74,17 +79,6 @@ in
               repo = "tmux-menus";
               rev = "764ac9cd6bbad199e042419b8074eda18e9d8b2d";
               sha256 = "sha256-tPUUaMASG/DtqxyN2VwCKPivYZkwVKjIScI99k6CJv8=";
-            };
-          })
-          (mkTmuxPlugin {
-            pluginName = "tmux-powerline";
-            version = "v3.0.0";
-            rtpFilePath = "main.tmux";
-            src = pkgs.fetchFromGitHub {
-              owner = "erikw";
-              repo = "tmux-powerline";
-              rev = "2480e5531e0027e49a90eaf540f973e624443937";
-              sha256 = "sha256-25uG7OI8OHkdZ3GrTxG1ETNeDtW1K+sHu2DfJtVHVbk=";
             };
           })
           {
@@ -163,6 +157,7 @@ in
   };
 
   imports = [
-    ./tmux-powerline/default.nix
+    (import ./catppuccin/default.nix (args // { parentNamespace = namespace; }))
+    (import ./tmux-powerline/default.nix (args // { parentNamespace = namespace; }))
   ];
 }
