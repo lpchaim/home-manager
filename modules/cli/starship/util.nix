@@ -1,12 +1,12 @@
 { pkgs, lib, ... }:
 with lib;
-let 
+let
   makePreset = name: pkgs.runCommand
     "starship-preset-${name}"
     { buildInputs = [ pkgs.starship ]; }
-    "starship preset ${name} > $out"; 
+    "starship preset ${name} > $out";
   getPresetFile = name: readFile (makePreset name);
-in {
+in
+{
   getPresetFiles = names: (map getPresetFile) names;
 }
-

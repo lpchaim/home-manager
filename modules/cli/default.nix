@@ -13,7 +13,7 @@ in
       cfg = lib.getAttrFromPath namespace config;
     in
     lib.mkIf cfg.enable {
-      lpchaim.modules = {
+      customizations.cli = {
         editors = {
           enable = lib.mkDefault true;
           helix.enable = lib.mkDefault true;
