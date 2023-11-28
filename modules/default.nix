@@ -2,7 +2,7 @@
 
 with lib;
 let
-  namespace = [ "modules" ];
+  namespace = [ "my" "modules" ];
   cfg = getAttrFromPath namespace config;
 in
 {

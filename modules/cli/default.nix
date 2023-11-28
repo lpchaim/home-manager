@@ -2,7 +2,7 @@
 
 with lib;
 let
-  namespace = [ "modules" "cli" ];
+  namespace = [ "my" "modules" "cli" ];
   cfg = getAttrFromPath namespace config;
 in
 {

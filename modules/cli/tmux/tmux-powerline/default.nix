@@ -3,7 +3,7 @@
 with builtins;
 with lib;
 let
-  namespace = [ "modules" "cli" "tmux" "tmux-powerline" ];
+  namespace = [ "my" "modules" "cli" "tmux" "tmux-powerline" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "git" ];
+  namespace = [ "my" "modules" "cli" "git" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

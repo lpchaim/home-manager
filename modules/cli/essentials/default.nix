@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "essentials" ];
+  namespace = [ "my" "modules" "cli" "essentials" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

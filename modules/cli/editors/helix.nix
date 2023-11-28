@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "editors" "helix" ];
+  namespace = [ "my" "modules" "cli" "editors" "helix" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

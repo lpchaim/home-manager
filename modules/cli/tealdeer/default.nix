@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "tealdeer" ];
+  namespace = [ "my" "modules" "cli" "tealdeer" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

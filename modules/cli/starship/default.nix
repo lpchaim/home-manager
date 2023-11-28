@@ -2,7 +2,7 @@ args@{ config, lib, pkgs, ... }:
 
 with lib;
 let
-  namespace = [ "modules" "cli" "starship" ];
+  namespace = [ "my" "modules" "cli" "starship" ];
   cfg = lib.getAttrFromPath namespace config;
   settings = import ./settings.nix;
   util = import ./util.nix args;

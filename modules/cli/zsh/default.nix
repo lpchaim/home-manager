@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "zsh" ];
+  namespace = [ "my" "modules" "cli" "zsh" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

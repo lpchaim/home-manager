@@ -5,7 +5,7 @@
 with builtins;
 with lib;
 let
-  namespace = [ "modules" "cli" "tmux" "catppuccin" ];
+  namespace = [ "my" "modules" "cli" "tmux" "catppuccin" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

@@ -3,7 +3,7 @@ args@{ config, pkgs, lib, ... }:
 with builtins;
 with lib;
 let
-  namespace = [ "modules" "cli" "tmux" ];
+  namespace = [ "my" "modules" "cli" "tmux" ];
   cfg = lib.getAttrFromPath namespace config;
   defaultClipboard = "clipboard"; # clipboard, primary, secondary
   termBasic = "screen-256color";

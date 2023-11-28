@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "editors" ];
+  namespace = [ "my" "modules" "cli" "editors" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {

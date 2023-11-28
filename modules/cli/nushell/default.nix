@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = [ "modules" "cli" "nushell" ];
+  namespace = [ "my" "modules" "cli" "nushell" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {
