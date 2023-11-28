@@ -17,5 +17,6 @@ in
 
   imports = [
     ./cli/default.nix
+    ./de/default.nix
   ];
 }
