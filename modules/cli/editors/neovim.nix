@@ -1,20 +1,17 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = (import ../namespace.nix) ++ [ "editors" "neovim" ];
+  namespace = [ "modules" "cli" "editors" "neovim" ];
+  cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
     enable = lib.mkEnableOption "neovim";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      programs.neovim = {
-        enable = true;
-      };
+  config = lib.mkIf cfg.enable {
+    programs.neovim = {
+      enable = true;
     };
+  };
 }

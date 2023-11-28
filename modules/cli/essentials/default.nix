@@ -1,70 +1,67 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = (import ../namespace.nix) ++ [ "essentials" ];
+  namespace = [ "modules" "cli" "essentials" ];
+  cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
     enable = lib.mkEnableOption "essentials";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      fonts.fontconfig.enable = true;
-      nixpkgs.config.allowUnfree = true;
+  config = lib.mkIf cfg.enable {
+    fonts.fontconfig.enable = true;
+    nixpkgs.config.allowUnfree = true;
 
-      home.packages = with pkgs; [
-        btop
-        cheat
-        curl
-        delta
-        difftastic
-        du-dust
-        duf
-        fd
-        htop
-        ncdu
-        (nerdfonts.override {
-          fonts = [
-            "FiraCode"
-            "JetBrainsMono"
-            "Overpass"
-            "SourceCodePro"
-          ];
-        })
-        rsync
-        wget
-      ];
+    home.packages = with pkgs; [
+      btop
+      cheat
+      curl
+      delta
+      difftastic
+      du-dust
+      duf
+      fd
+      htop
+      ncdu
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "JetBrainsMono"
+          "Overpass"
+          "SourceCodePro"
+        ];
+      })
+      rsync
+      wget
+    ];
 
-      programs = {
-        bat.enable = true;
-        broot.enable = true;
-        carapace.enable = true;
-        dircolors.enable = true;
-        direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-        };
-        eza = {
-          enable = true;
-          enableAliases = true;
-          extraOptions = [
-            "--group-directories-first"
-          ];
-          git = true;
-          icons = true;
-        };
-        fzf.enable = true;
-        mcfly = {
-          enable = true;
-          fuzzySearchFactor = 2;
-          keyScheme = "vim";
-        };
-        ripgrep.enable = true;
-        zoxide.enable = true;
+    programs = {
+      bat.enable = true;
+      broot.enable = true;
+      carapace.enable = true;
+      dircolors.enable = true;
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
       };
+      eza = {
+        enable = true;
+        enableAliases = true;
+        extraOptions = [
+          "--group-directories-first"
+        ];
+        git = true;
+        icons = true;
+      };
+      fzf.enable = true;
+      mcfly = {
+        enable = true;
+        fuzzySearchFactor = 2;
+        keyScheme = "vim";
+      };
+      ripgrep.enable = true;
+      zoxide.enable = true;
     };
+  };
 }

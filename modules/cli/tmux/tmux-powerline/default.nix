@@ -3,17 +3,15 @@
 with builtins;
 with lib;
 let
-  name = "tmux-powerline";
-  parentCfg = getAttrFromPath parentNamespace config;
-  namespace = parentNamespace ++ [ name ];
+  namespace = [ "modules" "cli" "tmux" "tmux-powerline" ];
   cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
     enable = mkOption {
-      description = "Whether to enable ${name}.";
+      description = "Whether to enable tmux-powerline.";
       type = types.bool;
-      default = (parentCfg.theme == name);
+      default = false;
     };
   };
 

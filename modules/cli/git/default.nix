@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = (import ../namespace.nix) ++ [ "git" ];
+  namespace = [ "modules" "cli" "git" ];
+  cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
@@ -9,23 +10,19 @@ in
     lazygit.enable = lib.mkEnableOption "lazygit";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      programs = {
-        git = {
-          enable = true;
-          delta.enable = true;
-          extraConfig = {
-            init.defaultBranch = "main";
-            pull.rebase = false;
-          };
-          userEmail = "lpchaim@gmail.com";
-          userName = "Lucas Chaim";
+  config = lib.mkIf cfg.enable {
+    programs = {
+      git = {
+        enable = true;
+        delta.enable = true;
+        extraConfig = {
+          init.defaultBranch = "main";
+          pull.rebase = false;
         };
-        lazygit.enable = lib.mkIf cfg.lazygit.enable true;
+        userEmail = "lpchaim@gmail.com";
+        userName = "Lucas Chaim";
       };
+      lazygit.enable = lib.mkIf cfg.lazygit.enable true;
     };
+  };
 }

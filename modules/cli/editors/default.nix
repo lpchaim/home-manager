@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = (import ../namespace.nix) ++ [ "editors" ];
+  namespace = [ "modules" "cli" "editors" ];
+  cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
@@ -10,16 +11,12 @@ in
     vim.enable = lib.mkEnableOption "vim";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      programs = {
-        kakoune.enable = cfg.kakoune.enable;
-        vim.enable = cfg.vim.enable;
-      };
+  config = lib.mkIf cfg.enable {
+    programs = {
+      kakoune.enable = cfg.kakoune.enable;
+      vim.enable = cfg.vim.enable;
     };
+  };
 
   imports = [
     ./helix.nix

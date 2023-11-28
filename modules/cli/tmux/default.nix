@@ -3,7 +3,7 @@ args@{ config, pkgs, lib, ... }:
 with builtins;
 with lib;
 let
-  namespace = (import ../namespace.nix) ++ [ "tmux" ];
+  namespace = [ "modules" "cli" "tmux" ];
   cfg = lib.getAttrFromPath namespace config;
   defaultClipboard = "clipboard"; # clipboard, primary, secondary
   termBasic = "screen-256color";
@@ -19,7 +19,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable ({
     home.sessionVariables.TERM = termFull;
 
     home.packages = with pkgs; [
@@ -155,10 +155,13 @@ in
         ];
       };
     };
-  };
+  } // lib.setAttrByPath namespace {
+    catppuccin.enable = (cfg.theme == "catppuccin");
+    tmux-powerline.enable = (cfg.theme == "tmux-powerline");
+  });
 
   imports = [
-    (import ./catppuccin/default.nix (args // { parentNamespace = namespace; }))
-    (import ./tmux-powerline/default.nix (args // { parentNamespace = namespace; }))
+    ./catppuccin/default.nix
+    ./tmux-powerline/default.nix
   ];
 }

@@ -1,19 +1,16 @@
 { config, lib, pkgs, ... }:
 
 let
-  namespace = (import ../namespace.nix) ++ [ "tealdeer" ];
+  namespace = [ "modules" "cli" "tealdeer" ];
+  cfg = lib.getAttrFromPath namespace config;
 in
 {
   options = lib.setAttrByPath namespace {
     enable = lib.mkEnableOption "nushell";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      home.packages = [ pkgs.tealdeer ];
-      home.file.".config/tealdeer/config.toml".source = ./config.toml;
-    };
+  config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.tealdeer ];
+    home.file.".config/tealdeer/config.toml".source = ./config.toml;
+  };
 }
