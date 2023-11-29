@@ -7,6 +7,11 @@ let
 in
 {
   options = setAttrByPath namespace {
+    enable = mkOption {
+      description = "Whether to enable desktop environment tweaks.";
+      type = types.bool;
+      default = (flavor != null);
+    };
     flavor = mkOption {
       description = "Which desktop environment to apply customizations to.";
       type = types.nullOr (types.enum [ "gtk" "plasma" ]);

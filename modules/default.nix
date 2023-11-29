@@ -11,8 +11,8 @@ in
   };
 
   config = setAttrByPath namespace (mkIf cfg.enable  {
-    cli.enable = true;
-    de.flavor = null;
+    cli.enable = mkDefault true;
+    de.flavor = mkDefault null;
   });
 
   imports = [
