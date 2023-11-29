@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, flake-utils, home-manager, ... } @inputs:
@@ -19,6 +23,7 @@
             inherit pkgs;
             modules = [
               ./home.nix
+              inputs.nixvim.homeManagerModules.nixvim
             ] ++ extraModules;
           };
       in
