@@ -38,7 +38,7 @@
           ];
           shellHook = ''
             export LC_ALL="C.UTF-8"
-            pre-commit
+            pre-commit install
           '';
         };
       }
