@@ -12,12 +12,18 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
   };
 
   outputs = { nixpkgs, flake-utils, home-manager, ... } @inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.nixneovimplugins.overlays.default
+          ];
+        };
         makeHomeConfig = { extraModules ? [ ] }:
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -29,9 +35,9 @@
       in
       {
         packages.homeConfigurations = {
-          cheina = makeHomeConfig { };
-          lpchaim = makeHomeConfig { };
-          lupec = makeHomeConfig { };
+          cheina = makeHomeConfig [ ];
+          lpchaim = makeHomeConfig [ ];
+          lupec = makeHomeConfig [ ];
         };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
