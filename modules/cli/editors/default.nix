@@ -20,6 +20,6 @@ in
 
   imports = [
     ./helix.nix
-    ./neovim.nix
+    ./neovim/default.nix
   ];
 }
