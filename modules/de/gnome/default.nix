@@ -2,7 +2,7 @@
 
 with lib;
 let
-  namespace = [ "my" "modules" "de" "gtk" ];
+  namespace = [ "my" "modules" "de" "gnome" ];
   cfg = getAttrFromPath namespace config;
 in
 {

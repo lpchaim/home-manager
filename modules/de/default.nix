@@ -14,16 +14,16 @@ in
     };
     flavor = mkOption {
       description = "Which desktop environment to apply customizations to.";
-      type = types.nullOr (types.enum [ "gtk" "plasma" ]);
+      type = types.nullOr (types.enum [ "gnome" "plasma" ]);
       default = null;
     };
   };
 
   config = setAttrByPath namespace {
-    gtk.enable = (cfg.flavor == "gtk");
+    gnome.enable = (cfg.flavor == "gnome");
   };
 
   imports = [
-    ./gtk/default.nix
+    ./gnome/default.nix
   ];
 }
