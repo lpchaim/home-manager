@@ -23,6 +23,7 @@ in
       duf
       fd
       htop
+      neofetch
       ncdu
       (nerdfonts.override {
         fonts = [
