@@ -12,18 +12,23 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs.gnomeExtensions; [
+    home.packages = with pkgs; [
+      gnome.gnome-tweaks
+    ]
+    ++ (with gnomeExtensions; [
+      blur-my-shell
       dash-to-dock
       tray-icons-reloaded
       user-themes
       vitals
     ] ++ optionals pre43 [
       sound-output-device-chooser
-    ];
+    ]);
     dconf.settings = {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
+          "blur-my-shell@aunetx"
           "dash-to-dock@micxgx.gmail.com"
           "trayIconsReloaded@selfmade.pl"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -42,13 +47,14 @@ in
         disable-overview-on-startup = true;
       };
       "org/gnome/shell/extensions/vitals" = {
-        show-storage = false;
-        show-voltage = false;
-        show-memory = false;
-        show-fan = false;
-        show-temperature = false;
-        show-processor = false;
-        show-network = false;
+        show-storage = true;
+        show-voltage = true;
+        show-memory = true;
+        show-fan = true;
+        show-temperature = true;
+        show-processor = true;
+        show-network = true;
+        hot-sensors = [ "_default_icon_" ];
       };
     };
   };

@@ -19,14 +19,13 @@ in
       theming = {
         enable = mkDefault true;
         enableGtkTheme = mkDefault false;
+        enableGnomeShellTheme = mkDefault false;
         enableIconTheme = mkDefault true;
         enableCursorTheme = mkDefault true;
         preferDarkTheme = mkDefault true;
       };
     } // {
-    gtk = {
-      enable = true;
-    };
+    gtk.enable = true;
     dconf.settings = {
       "org/gnome/desktop/interface" = {
         enable-hot-corners = true;
@@ -45,6 +44,6 @@ in
 
   imports = [
     ./extensions/default.nix
-    ./theming.nix
+    ./theming/default.nix
   ];
 }
