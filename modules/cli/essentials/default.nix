@@ -14,6 +14,7 @@ in
     nixpkgs.config.allowUnfree = true;
 
     home.packages = with pkgs; [
+      bash
       btop
       cheat
       curl
