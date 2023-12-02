@@ -1,47 +1,24 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
+with lib;
 let
-  namespace = import ./namespace.nix;
+  namespace = [ "my" "modules" ];
+  cfg = getAttrFromPath namespace config;
 in
 {
-  options = lib.setAttrByPath namespace {
-    enable = lib.mkEnableOption "custom modules";
+  options = setAttrByPath namespace {
+    enable = mkEnableOption "customizations";
   };
 
-  config =
-    let
-      cfg = lib.getAttrFromPath namespace config;
-    in
-    lib.mkIf cfg.enable {
-      lpchaim.modules = {
-        editors = {
-          enable = lib.mkDefault true;
-          helix.enable = lib.mkDefault true;
-          kakoune.enable = lib.mkDefault true;
-          neovim.enable = lib.mkDefault true;
-          vim.enable = lib.mkDefault true;
-        };
-        essentials.enable = lib.mkDefault true;
-        git = {
-          enable = lib.mkDefault true;
-          lazygit.enable = lib.mkDefault true;
-        };
-        nushell.enable = lib.mkDefault true;
-        starship.enable = lib.mkDefault true;
-        tealdeer.enable = lib.mkDefault true;
-        tmux.enable = lib.mkDefault true;
-        zsh.enable = lib.mkDefault true;
-      };
-    };
+  config = setAttrByPath namespace (mkIf cfg.enable {
+    cli.enable = mkDefault true;
+    de.flavor = mkDefault null;
+    gui.enable = mkDefault false;
+  });
 
   imports = [
-    ./editors/default.nix
-    ./essentials/default.nix
-    ./git/default.nix
-    ./nushell/default.nix
-    ./starship/default.nix
-    ./tealdeer/default.nix
-    ./tmux/default.nix
-    ./zsh/default.nix
+    ./cli/default.nix
+    ./de/default.nix
+    ./gui/default.nix
   ];
 }
