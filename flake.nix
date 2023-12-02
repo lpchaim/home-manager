@@ -47,6 +47,11 @@
             ./traits/cheina.nix
             ./traits/non-nixos.nix
           ];
+          "lpchaim@laptop" = makeHomeConfig [
+            (import ./traits/base.nix { stateVersion = "23.11"; username = "lpchaim"; })
+            ./traits/gnome.nix
+            ./traits/gui.nix
+          ];
           lpchaim = makeHomeConfig [ ];
           lupec = makeHomeConfig [ ];
         };
