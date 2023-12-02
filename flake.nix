@@ -61,6 +61,7 @@
             nixd
             nixpkgs-fmt
             pre-commit
+            rustup
             rnix-lsp
           ];
           shellHook = ''
