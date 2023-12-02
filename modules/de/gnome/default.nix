@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 let
@@ -8,58 +8,43 @@ in
 {
   options = setAttrByPath namespace {
     enable = mkEnableOption "GTK/GNOME Shell customizations";
-    enableTheming = mkOption {
-      description = "Whether to enable theming tweaks.";
-      type = types.bool;
-      default = true;
-    };
-    enableTheme = mkOption {
-      description = "Whether to set custom theme.";
-      type = types.bool;
-      default = cfg.enableTheming;
-    };
-    enableIconTheme = mkOption {
-      description = "Whether to set custom icon theme.";
-      type = types.bool;
-      default = cfg.enableTheming;
-    };
-    enableCursorTheme = mkOption {
-      description = "Whether to set custom cursor theme.";
-      type = types.bool;
-      default = cfg.enableTheming;
-    };
-    preferDarkTheme = mkOption {
-      description = "Set prefer-dark-theme flag.";
-      type = types.bool;
-      default = true;
-    };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable (setAttrByPath namespace
+    {
+      extensions = {
+        enable = mkDefault true;
+        dash-to-panel.enable = mkDefault true;
+      };
+      theming = {
+        enable = mkDefault true;
+        enableGtkTheme = mkDefault false;
+        enableIconTheme = mkDefault true;
+        enableCursorTheme = mkDefault true;
+        preferDarkTheme = mkDefault true;
+      };
+    } // {
     gtk = {
       enable = true;
-      theme = mkIf cfg.enableTheme {
-        name = "colloid-gtk-theme";
-        package = pkgs.colloid-gtk-theme;
+    };
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        enable-hot-corners = true;
       };
-      iconTheme = mkIf cfg.enableIconTheme {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
+      "org/gnome/mutter" = {
+        experimental-features = [ "scale-monitor-framebuffer" ];
       };
-      cursorTheme = mkIf cfg.enableCursorTheme {
-        name = "Breeze_Snow";
-        package = pkgs.libsForQt5.breeze-icons;
-      };
-      gtk3.extraConfig = mkIf cfg.preferDarkTheme {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-      gtk4.extraConfig = mkIf cfg.preferDarkTheme {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
+      "org/gnome/shell" = {
+        favorite-apps = [
+          "org.gnome.Nautilus.desktop"
+          "firefox.desktop"
+        ];
       };
     };
-  };
+  });
+
+  imports = [
+    ./extensions/default.nix
+    ./theming.nix
+  ];
 }
