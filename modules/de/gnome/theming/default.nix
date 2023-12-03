@@ -68,7 +68,7 @@ in
     (
       let
         assetsPath = ../../../../assets;
-        destinationPath = config.xdg.configHome;
+        destinationPath = config.home.homeDirectory;
         pfp = "${assetsPath}/profile-picture.png";
         wallpaper-light = "${assetsPath}/wallpaper-city-l.png";
         wallpaper-dark = "${assetsPath}/wallpaper-city-d.png";
