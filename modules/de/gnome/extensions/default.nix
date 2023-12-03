@@ -16,21 +16,31 @@ in
       gnome.gnome-tweaks
     ]
     ++ (with gnomeExtensions; [
+      appindicator
       blur-my-shell
+      clipboard-indicator
       dash-to-dock
+      gsconnect
+      show-desktop-button
       tray-icons-reloaded
       user-themes
       vitals
-    ] ++ optionals pre43 [
+    ]
+    ++ optionals pre43 [
       sound-output-device-chooser
     ]);
+
     dconf.settings = {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
+          "appindicatorsupport@rgcjonas.gmail.com"
           "blur-my-shell@aunetx"
+          "clipboard-indicator@tudmotu.com"
           "dash-to-dock@micxgx.gmail.com"
-          "trayIconsReloaded@selfmade.pl"
+          "gsconnect@andyholmes.github.io"
+          "show-desktop-button@amivaleo"
+          # "trayIconsReloaded@selfmade.pl"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "Vitals@CoreCoding.com"
         ] ++ optionals pre43 [

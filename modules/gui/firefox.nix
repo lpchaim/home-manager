@@ -17,6 +17,7 @@ in
           enableGnomeExtensions = (config.my.modules.de.flavor == "gtk");
           enablePlasmaBrowserIntegration = (config.my.modules.de.flavor == "plasma");
         };
+        extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
       };
       profiles.default = {
         isDefault = true;
