@@ -20,49 +20,73 @@ in
     preferDarkTheme = mkEnableOption "prefer-dark-theme flags";
   };
 
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [ ]
-      ++ optional cfg.enableGnomeShellTheme (catppuccin-gtk.override {
-      variant = catppuccin.variant;
-      accents = [ catppuccin.accent ];
-      tweaks = [ "normal" ];
-      size = "standard";
-    });
+  config = mkIf cfg.enable (mkMerge [
+    {
+      home.packages = with pkgs; [ ]
+        ++ optional cfg.enableGnomeShellTheme (catppuccin-gtk.override {
+        variant = catppuccin.variant;
+        accents = [ catppuccin.accent ];
+        tweaks = [ "normal" ];
+        size = "standard";
+      });
 
-    gtk = optionalAttrs cfg.enableGtkTheme
-      {
-        theme = {
-          name = "Catppuccin-${toTitle catppuccin.variant}-Standard-${toTitle catppuccin.accent}-Dark";
-          package = pkgs.catppuccin-gtk;
-        };
-      } // optionalAttrs cfg.enableIconTheme {
-      iconTheme = {
+      gtk.theme = mkIf cfg.enableGtkTheme {
+        name = "Catppuccin-${toTitle catppuccin.variant}-Standard-${toTitle catppuccin.accent}-Dark";
+        package = pkgs.catppuccin-gtk;
+      };
+
+      gtk.iconTheme = mkIf cfg.enableIconTheme {
         name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
       };
-    } // optionalAttrs cfg.enableCursorTheme {
-      cursorTheme = {
+
+      gtk.cursorTheme = mkIf cfg.enableCursorTheme {
         name = "Catppuccin-Latte-Light-Cursors";
         package = pkgs.catppuccin-cursors.latteLight;
       };
-    } // optionalAttrs cfg.preferDarkTheme {
-      gtk3.extraConfig.Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
-      gtk4.extraConfig.Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
-    };
 
-    dconf.settings = optionalAttrs cfg.preferDarkTheme
-      {
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-        };
-      } // optionalAttrs cfg.enableGnomeShellTheme {
-      "org/gnome/shell/extensions/user-theme" = {
+      dconf.settings."org/gnome/shell/extensions/user-theme" = mkIf cfg.enableGnomeShellTheme {
         name = "Catppuccin-${toTitle catppuccin.variant}-Standard-${toTitle catppuccin.accent}-Dark";
       };
-    };
-  };
+    }
+    (
+      mkIf cfg.preferDarkTheme {
+        gtk.gtk3.extraConfig.Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+        gtk.gtk4.extraConfig.Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
+          };
+        };
+      }
+    )
+    (
+      let
+        assetsPath = ../../../../assets;
+        destinationPath = config.xdg.configHome;
+        pfp = "${assetsPath}/profile-picture.png";
+        wallpaper-light = "${assetsPath}/wallpaper-city-l.png";
+        wallpaper-dark = "${assetsPath}/wallpaper-city-d.png";
+      in
+      {
+        home.file."${destinationPath}/.face".source = pfp;
+        home.file."${destinationPath}/.wallpaper-l".source = wallpaper-light;
+        home.file."${destinationPath}/.wallpaper-d".source = wallpaper-dark;
+
+        dconf.settings = {
+          "org/gnome/desktop/background" = {
+            picture-uri = "${destinationPath}/.wallpaper-l";
+            picture-uri-dark = "${destinationPath}/.wallpaper-d";
+            primary-color = "#000000";
+            picture-options = "zoom";
+          };
+        };
+      }
+    )
+  ]);
 }
