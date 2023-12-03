@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{ config
+, pkgs
+, lib
+, ...
+}:
 
 with lib;
 let
@@ -10,15 +14,39 @@ in
     enable = mkEnableOption "gui apps";
   };
 
-  config = mkIf cfg.enable (setAttrByPath namespace
-    {
+  config = mkIf cfg.enable (mkMerge [
+    (setAttrByPath namespace {
       firefox.enable = mkDefault true;
-    } // {
-    xdg.mime.enable = true;
-    xdg.systemDirs.data = [
-      "${config.home.homeDirectory}/.nix-profile/share/applications"
-    ];
-  });
+    })
+    {
+      home.packages = with pkgs; [
+        discord
+      ];
+
+      programs.vscode = {
+        enable = true;
+        enableExtensionUpdateCheck = true;
+        enableUpdateCheck = false;
+        mutableExtensionsDir = true;
+      };
+
+      services.nextcloud-client = {
+        enable = true;
+        startInBackground = true;
+      };
+
+      xdg.mime.enable = true;
+      xdg.systemDirs.data = [
+        "${config.home.homeDirectory}/.nix-profile/share/applications"
+      ];
+    }
+    {
+      home.packages = with pkgs; [
+        spotify
+        spotify-tray
+      ];
+    }
+  ]);
 
   imports = [
     ./firefox.nix
