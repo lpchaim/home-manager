@@ -20,6 +20,10 @@
       let
         pkgs = import nixpkgs {
           inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
           overlays = [
             inputs.nixneovimplugins.overlays.default
           ];
@@ -37,8 +41,6 @@
               inputs.nixvim.homeManagerModules.nixvim
             ];
           };
-        importPaths = paths:
-          builtins.map (x: (import x)) paths;
       in
       {
         packages.homeConfigurations = {
