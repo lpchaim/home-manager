@@ -44,6 +44,8 @@ in
           "browser.startup.homepage" = "about:newtab";
           "distribution.searchplugins.defaultLocale" = "pt-BR";
           "general.useragent.locale" = "pt-BR";
+          "mousewheel.default.delta_multiplier_x" = 20;
+          "mousewheel.default.delta_multiplier_y" = 20;
           "widget.use-xdg-desktop-portal.file-picker" = if (config.my.modules.de.flavor == "plasma") then 1 else 0;
         };
       };
