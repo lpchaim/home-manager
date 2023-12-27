@@ -25,8 +25,8 @@ in
 
       programs.vscode = {
         enable = true;
+        package = pkgs.vscode.fhs;
         enableExtensionUpdateCheck = true;
-        enableUpdateCheck = false;
         mutableExtensionsDir = true;
       };
 
